@@ -6,5 +6,6 @@ namespace DemoASPMVC_DAL.Interface
     {
         User Login(string email, string pwd);
         bool Register(string email, string pwd, string nickname);
+        bool SetRole(int idUser, int idRole);
     }
 }

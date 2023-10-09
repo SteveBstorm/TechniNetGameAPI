@@ -28,9 +28,9 @@ namespace TechniNetGameAPI.Controllers
         }
         [Authorize("AdminPolicy")]
         [HttpPost]
-        public IActionResult Post([FromBody] GameCreate game) 
-        { 
-            if(!ModelState.IsValid) { return  BadRequest(); }
+        public IActionResult Post([FromBody] GameCreate game)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }
 
             try
             {
@@ -44,24 +44,38 @@ namespace TechniNetGameAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) 
+        public IActionResult GetById(int id)
         {
             GameView game = _gameService.GetById(id).ToAsp(_genreService);
             return Ok(game);
-           
+
         }
 
         [Authorize("IsConnected")]
-        [HttpGet("favoris/{id}")]
-        public IActionResult GetFavorite(int id)
+        [HttpGet("favoris/{userid}")]
+        public IActionResult GetFavorite(int userid)
         {
-            return Ok(_gameService.GetByUserId(id));
+            return Ok(_gameService.GetByUserId(userid));
         }
 
         [HttpGet("genre/{id}")]
         public IActionResult GetByGenre(int id)
         {
             return Ok(_gameService.GetGames().Where(x => x.IdGenre == id));
+        }
+
+        [HttpPost("Addfavorite")]
+        public IActionResult PostFavorite([FromBody] AddFavoriteForm f)
+        {
+            try
+            {
+                _gameService.AddFavorite(f.idUser, f.idGame);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest("Favoris déjà ajouté");
+            }
         }
     }
 }

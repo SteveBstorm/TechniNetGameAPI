@@ -1,5 +1,6 @@
 ﻿using DemoASPMVC_DAL.Interface;
 using DemoASPMVC_DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechniNetGameAPI.Models;
@@ -49,6 +50,23 @@ namespace TechniNetGameAPI.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
+        [HttpGet("byid/{id}")]
+        public IActionResult GetById(int id) {
+            return Ok(_userService.GetById(id, "Users"));
+        }
+
+        [Authorize("AdminPolicy")]
+        [HttpPatch("setRole")]
+        public IActionResult SetRole(SetRoleForm model)
+        {
+            return Ok(_userService.SetRole(model.IdUser, model.IdRole));
+        }
+        [Authorize("AdminPolicy")]
+        [HttpGet]
+        public IActionResult GetAll() 
+        {
+            return Ok(_userService.GetAll("users"));
+        }
         
     }
 }

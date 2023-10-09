@@ -76,5 +76,22 @@ namespace DemoASPMVC_DAL.Services
             }
 
         }
+
+        public bool SetRole(int idUser, int idRole)
+        {
+            using (SqlConnection cnx = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand cmd = cnx.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Users SET RoleId = @idRole WHERE Id = @idUser";
+                    
+                    cmd.Parameters.AddWithValue("idRole", idRole);
+                    cmd.Parameters.AddWithValue("idUser", idUser);
+
+                    cnx.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
     }
 }
