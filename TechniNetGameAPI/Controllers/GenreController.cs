@@ -1,4 +1,5 @@
-﻿using DemoASPMVC_DAL.Interface;
+﻿//using DemoASPMVC_DAL.Interface;
+using GameDAL_EF.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

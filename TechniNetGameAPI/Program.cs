@@ -1,5 +1,7 @@
-using DemoASPMVC_DAL.Interface;
-using DemoASPMVC_DAL.Services;
+//using DemoASPMVC_DAL.Interface;
+//using DemoASPMVC_DAL.Services;
+using GameDAL_EF.Interface;
+using GameDAL_EF.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Data.SqlClient;
@@ -15,11 +17,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient(sp => new SqlConnection(builder.Configuration.GetConnectionString("default")));
+//builder.Services.AddTransient(sp => new SqlConnection(builder.Configuration.GetConnectionString("default")));
 
-builder.Services.AddScoped<IGameService, GameDBService>();
-builder.Services.AddScoped<IGenreService, GenreService>();
+//Serices ADO
+//builder.Services.AddScoped<IGameService, GameDBService>();
+//builder.Services.AddScoped<IGenreService, GenreService>();
+//builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+
 builder.Services.AddScoped<TokenManager>();
 
 //Ajout de la sécurité par JWT

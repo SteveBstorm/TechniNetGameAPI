@@ -1,5 +1,7 @@
-﻿using DemoASPMVC_DAL.Interface;
-using DemoASPMVC_DAL.Models;
+﻿//using DemoASPMVC_DAL.Interface;
+//using DemoASPMVC_DAL.Models;
+using GameDAL_EF.Interface;
+using GameDAL_EF.Entities;
 using TechniNetGameAPI.Models;
 
 namespace TechniNetGameAPI.Tools
