@@ -1,4 +1,5 @@
-﻿using DemoASPMVC_DAL.Models;
+﻿//using DemoASPMVC_DAL.Models;
+using GameDAL_EF.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

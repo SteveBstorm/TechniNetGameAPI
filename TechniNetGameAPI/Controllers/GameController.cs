@@ -1,5 +1,6 @@
-﻿using DemoASPMVC_DAL.Interface;
-using DemoASPMVC_DAL.Models;
+﻿//using DemoASPMVC_DAL.Interface;
+//using DemoASPMVC_DAL.Models;
+using GameDAL_EF.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

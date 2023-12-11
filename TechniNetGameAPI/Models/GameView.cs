@@ -1,5 +1,5 @@
-﻿using DemoASPMVC_DAL.Models;
-
+﻿//using DemoASPMVC_DAL.Models;
+using GameDAL_EF.Entities;
 namespace TechniNetGameAPI.Models
 {
     public class GameView
