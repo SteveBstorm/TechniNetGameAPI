@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Data.SqlClient;
 using System.Text;
+using TechniNetGameAPI.Hubs;
 using TechniNetGameAPI.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IGameService, GameDBService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<TokenManager>();
+
+builder.Services.AddSingleton<ChatHub>();
 
 //Ajout de la sécurité par JWT
 //Création des role
@@ -48,6 +51,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         
     );
 
+builder.Services.AddCors(o => o.AddPolicy("myPolicy", options => 
+    options.WithOrigins("http://localhost:4200")
+    .AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
+
+builder.Services.AddCors(o => o.AddPolicy("AndroidPolicy", options =>
+    options.WithOrigins("http://machin.com")
+    .WithMethods("GET").AllowAnyHeader().AllowCredentials()));
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,11 +69,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//Cors Wildcard
+//app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()) ;
 
+app.UseCors("myPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("chathub");
 
 app.MapControllers();
 

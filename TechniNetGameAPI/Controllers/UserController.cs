@@ -3,6 +3,7 @@ using DemoASPMVC_DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TechniNetGameAPI.Hubs;
 using TechniNetGameAPI.Models;
 using TechniNetGameAPI.Tools;
 
@@ -14,11 +15,19 @@ namespace TechniNetGameAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly TokenManager _tokenManager;
+        private readonly ChatHub _hub;
 
-        public UserController(IUserService userService, TokenManager tokenManager)
+        public UserController(IUserService userService, TokenManager tokenManager, ChatHub hub)
         {
             _userService = userService;
             _tokenManager = tokenManager;
+            _hub = hub;
+        }
+
+        [HttpGet("testhub")]
+        public async Task<IActionResult> GetHub() {
+            await _hub.SendMessage(new ChatModel { Username = "Controller", Message = "Test Controller Ok" });
+            return Ok();
         }
 
         [HttpPost("register")]
